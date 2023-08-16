@@ -1,0 +1,30 @@
+.form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 16px 15px;
+  background-color: #fff;
+  box-shadow: 0px 2px 31px 13px rgba(10, 63, 142, 0.08);
+  border-radius: 16px;
+}
+
+.textarea {
+  flex-grow: 1;
+  max-height: 36px;
+}
+
+.button {
+  background-color: #007afe;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  cursor: pointer;
+  img {
+    height: 26px;
+    width: 26px;
+  }
+}

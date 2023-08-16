@@ -1,0 +1,25 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 34px;
+  height: 100%;
+}
+
+.title {
+  color: #fff;
+  font-family: Open Sans;
+  font-size: 58px;
+  font-weight: 700;
+  line-height: 155%;
+  text-transform: capitalize;
+}
+
+.subtitle {
+  color: #fff;
+  font-family: Open Sans;
+  font-size: 18px;
+  line-height: 155%;
+  margin-bottom: 26px;
+}

@@ -1,0 +1,30 @@
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-bottom: 17px;
+}
+
+.message_sent {
+    flex-direction: row-reverse;
+}
+
+.avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.text {
+  max-width: 400px;
+  padding: 12px 20px;
+  font-family: Open Sans;
+  font-size: 18px;
+  line-height: 155%;
+  border-radius: 28px;
+  background: rgba(34, 118, 245, 0.2);
+}
+
+.text_sent {
+    background-color: #007AFE;
+}
