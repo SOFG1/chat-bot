@@ -21,8 +21,8 @@ const TextArea = React.memo(({ value, onChange, placeholder, className, onEnterP
     <textarea
       className={`${s.textarea} ${className ? className : ""}`}
       value={value}
-      onChange={(e) => onChange(e.target.value)}
       onKeyUp={handleEnterPress}
+      onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
     ></textarea>
   );

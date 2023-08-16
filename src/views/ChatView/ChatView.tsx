@@ -1,8 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import stream from "stream"
 import s from "./ChatView.module.scss";
 import avatarImg from "../../assets/images/avatar.png";
 import MessageComponent from "../../components/MessageComponent/MessageComponent";
 import MessageFormComponent from "../../components/MessageFormComponent/MessageFormComponent";
+import { Chat } from "../../api/chat";
+
+
+
+
 
 const initial = [
     { text: "Hello! I’m BotHub, AI-based bot designed to answer all your questions.", sent: false },
@@ -16,8 +22,22 @@ const ChatView = React.memo(() => {
     const listRef = useRef<HTMLDivElement>(null)
     const [messages, setMessages] = useState<{ text: string, sent: boolean }[]>(initial)
 
-    const handleSend = useCallback((text: string) => {
+    const handleSend = useCallback(async (text: string) => {
         setMessages(p => ([...p, { text, sent: true }]))
+        const formated = text.replace(/(?:\r\n|\r|\n)/g, "")
+        const res = await Chat.sendMessageStream(formated)
+        if (res.body) {
+            const reader = res.body.getReader()
+            while (true) {
+                const { done, value } = await reader.read();
+                var string = new TextDecoder().decode(value);
+                if (done) {
+                  return;
+                }
+                console.log("chunk",string)
+
+              }
+        }
     }, [])
 
 

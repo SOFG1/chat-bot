@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useId, useEffect, useMemo } from "react";
+import React, { useState, useCallback, useId } from "react";
 import s from "./MessageFormComponent.module.scss";
 import sendIcon from "../../assets/images/send-icon.png";
 import TextArea from "../../UI/TextArea/TextArea";
