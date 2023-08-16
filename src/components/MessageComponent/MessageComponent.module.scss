@@ -1,3 +1,12 @@
+@keyframes popUp {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
 .message {
   display: flex;
   align-items: flex-start;
@@ -6,7 +15,7 @@
 }
 
 .message_sent {
-    flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 
 .avatar {
@@ -23,8 +32,11 @@
   line-height: 155%;
   border-radius: 28px;
   background: rgba(34, 118, 245, 0.2);
+  animation: popUp 300ms;
+  transform-origin: left top;
 }
 
 .text_sent {
-    background-color: #007AFE;
+  background-color: #007afe;
+  transform-origin: right top;
 }
