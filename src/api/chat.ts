@@ -1,15 +1,6 @@
-import { API_URL, axiosInstance } from ".";
+import { API_URL } from ".";
 
 export const Chat = {
-  sendMessage: async (message: string) => {
-    return await axiosInstance.post(
-      "chat/send-message",
-      { message },
-      {
-        responseType: "stream",
-      }
-    );
-  },
   sendMessageStream: async (message: string) => {
     return await fetch(`${API_URL}chat/send-message`, {
       method: "post",

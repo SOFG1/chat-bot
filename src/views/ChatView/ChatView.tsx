@@ -1,44 +1,42 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import stream from "stream"
 import s from "./ChatView.module.scss";
 import avatarImg from "../../assets/images/avatar.png";
 import MessageComponent from "../../components/MessageComponent/MessageComponent";
 import MessageFormComponent from "../../components/MessageFormComponent/MessageFormComponent";
 import { Chat } from "../../api/chat";
+import { IMessage } from "../../types";
 
 
 
 
 
-const initial = [
-    { text: "Hello! I’m BotHub, AI-based bot designed to answer all your questions.", sent: false },
-    { text: "Hello. help me to solve my math test", sent: true },
-    { text: "Alright. Send me tasks", sent: false },
-    { text: "First task is following: Lucy has measuring cups of sizes 1 cup, 1/5 cup, 1/3 cup, and 1/4 cup. She is trying to measure out 1/6 of a cup of water and says, ''If I fill up the the 1/2 cup and then pour that into the 1/3 cup until it is full, there will be 1/6 of a cup of water left.", sent: true },
-    { text: "I guess you can solve it by yourself!", sent: false },
-]
+const initial = {
+    1: { text: "Hello! I’m BotHub, AI-based bot designed to answer all your questions.", sent: false },
+}
+
+
+
+
 
 const ChatView = React.memo(() => {
     const listRef = useRef<HTMLDivElement>(null)
-    const [messages, setMessages] = useState<{ text: string, sent: boolean }[]>(initial)
+    const [messages, setMessages] = useState<{ [key: string]: IMessage }>(initial)
+
+
 
     const handleSend = useCallback(async (text: string) => {
-        setMessages(p => ([...p, { text, sent: true }]))
         const formated = text.replace(/(?:\r\n|\r|\n)/g, "")
+        if(!formated) return
+        //Add sent message
+        const sentMessageOrder = Object.keys(messages).length + 1
+        setMessages(p => ({ ...p, [sentMessageOrder]: { text, sent: true } }))
         const res = await Chat.sendMessageStream(formated)
         if (res.body) {
             const reader = res.body.getReader()
-            while (true) {
-                const { done, value } = await reader.read();
-                var string = new TextDecoder().decode(value);
-                if (done) {
-                  return;
-                }
-                console.log("chunk",string)
-
-              }
+            const receivedMessageOrder = sentMessageOrder + 1
+            setMessages(p => ({ ...p, [receivedMessageOrder]: { text: reader, sent: false } }))
         }
-    }, [])
+    }, [messages])
 
 
     useEffect(() => {
@@ -51,12 +49,12 @@ const ChatView = React.memo(() => {
     return (
         <>
             <div className={s.list} ref={listRef}>
-                {messages.map((m, index) => {
+                {Object.keys(messages).map((key, index) => {
                     return <MessageComponent
                         key={index}
                         avatar={avatarImg}
-                        text={m.text}
-                        sent={m.sent}
+                        message={messages[key].text}
+                        sent={messages[key].sent}
                     />
                 })}
             </div>
